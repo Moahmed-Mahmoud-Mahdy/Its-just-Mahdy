@@ -1,49 +1,80 @@
-<section id="home" class="hero">
-  <div class="hero-container">
-    <div class="hero-grid">
-      <!-- Text Content -->
-      <div class="hero-content">
-        <div class="hero-text">
-          <!-- Available Badge -->
-          <div class="available-badge">
-            <span class="pulse-dot">
-              <span class="ping"></span>
-              <span class="dot"></span>
-            </span>
-            Available for new projects
-          </div>
+<section id="home" class="landing">
+  <div class="landing-container">
+    <!-- Main Hero Area -->
+    <div class="landing-grid">
+      <!-- Left: Profile Visual -->
+      <div class="landing-visual">
+        <!-- Background glow -->
+        <div class="visual-glow"></div>
 
-          <!-- Headline -->
-          <h1 class="hero-title">
-            Crafting <span class="text-primary">Interactive</span> Digital
-            Experiences.
+        <!-- Logo badge above image -->
+        <div class="logo-floating">
+          <img src="assets/images/logo.png" alt="Logo" class="logo-img" />
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="profile-frame">
+          <img
+            src="assets/images/me.jpeg"
+            [alt]="'Portrait of ' + personalInfo.name"
+            class="profile-image"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Floating Tech Icons -->
+        <div class="floating-icon floating-angular">
+          <i class="fa-brands fa-angular"></i>
+          <span class="floating-label">Angular</span>
+        </div>
+        <div class="floating-icon floating-js">
+          <i class="fa-brands fa-js"></i>
+          <span class="floating-label floating-label-bottom">JS</span>
+        </div>
+        <div class="floating-icon floating-html">
+          <i class="fa-brands fa-html5"></i>
+          <span class="floating-label">Web</span>
+        </div>
+        <div class="floating-icon floating-git">
+          <i class="fa-brands fa-git-alt"></i>
+          <span class="floating-label floating-label-bottom">Git</span>
+        </div>
+      </div>
+
+      <!-- Right: Text Content -->
+      <div class="landing-content">
+        <!-- Available Badge -->
+        <div class="available-badge">
+          <span class="pulse-dot">
+            <span class="ping"></span>
+            <span class="dot"></span>
+          </span>
+          Available for new projects
+        </div>
+
+        <!-- Name & Title -->
+        <div class="landing-header">
+          <span class="section-badge">WHO AM I?</span>
+          <h1 class="landing-title">
+            Hi, I'm
+            <span class="text-primary">{{
+              personalInfo.name.split(" ")[0]
+            }}</span>
+            {{ personalInfo.name.split(" ").slice(1).join(" ") }}
           </h1>
-
-          <!-- Description -->
-          <p class="hero-description">
-            I'm <span class="font-semibold">{{ personalInfo.name }}</span
-            >, a passionate full-stack developer specializing in Angular,
-            JavaScript, and building high-performance web applications.
-          </p>
+          <p class="landing-role">{{ personalInfo.title }}</p>
         </div>
 
-        <!-- CTA Buttons -->
-        <div class="hero-actions">
-          <button class="btn btn-primary" (click)="scrollToProjects()">
-            <span class="material-symbols-outlined">folder_open</span>
-            <span>View Projects</span>
-          </button>
-          <button class="btn btn-secondary" (click)="downloadCv()">
-            <span class="material-symbols-outlined">download</span>
-            <span>Resume</span>
-          </button>
-        </div>
+        <!-- About Text -->
+        <p class="landing-description">
+          {{ personalInfo.aboutMe }}
+        </p>
 
-        <!-- Stats -->
-        <div class="hero-stats">
+        <!-- Stats Row -->
+        <div class="landing-stats">
           @for (stat of stats; track stat.label; let last = $last) {
-            <div class="stat">
-              <span class="stat-value">{{ stat.value }}</span>
+            <div class="stat-item">
+              <span class="stat-number">{{ stat.value }}</span>
               <span class="stat-label">{{ stat.label }}</span>
             </div>
             @if (!last) {
@@ -51,35 +82,42 @@
             }
           }
         </div>
-      </div>
 
-      <!-- Profile Image -->
-      <div class="hero-image-wrapper">
-        <div class="hero-image-container">
-          <!-- Decorative elements -->
-          <div class="circle-decoration circle-1"></div>
-          <div class="circle-decoration circle-2"></div>
-
-          <!-- Main Image -->
-          <div class="profile-image">
-            <img
-              src="assets/images/me.jpeg"
-              alt="Professional portrait of {{ personalInfo.name }}"
-              loading="eager"
-            />
-          </div>
-
-          <!-- Floating Badge -->
-          <div class="floating-badge">
-            <div class="badge-icon">
-              <span class="material-symbols-outlined">terminal</span>
-            </div>
-            <div class="badge-text">
-              <p class="badge-label">Top Rated</p>
-              <p class="badge-title">Frontend Dev</p>
-            </div>
-          </div>
+        <!-- Action Buttons -->
+        <div class="landing-actions">
+          <button class="btn btn-primary" (click)="scrollToProjects()">
+            <span class="material-symbols-outlined">folder_open</span>
+            <span>View Projects</span>
+          </button>
+          <button class="btn btn-secondary" (click)="scrollToContact()">
+            <span class="material-symbols-outlined">mail</span>
+            <span>Contact Me</span>
+          </button>
+          <button class="btn btn-outline" (click)="downloadCv()">
+            <span class="material-symbols-outlined">download</span>
+            <span>Resume</span>
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Modern Stack Row -->
+    <div class="stack-section">
+      <div class="stack-header">
+        <h3 class="stack-title">My Focus Areas</h3>
+        <span class="stack-subtitle">What I bring to the table</span>
+      </div>
+      <div class="stack-grid" appScrollReveal>
+        @for (highlight of highlights; track highlight.title) {
+          <div class="stack-card">
+            <div class="highlight-icon">
+              <span class="material-symbols-outlined">{{
+                highlight.icon
+              }}</span>
+            </div>
+            <h4 class="stack-name">{{ highlight.title }}</h4>
+          </div>
+        }
       </div>
     </div>
   </div>

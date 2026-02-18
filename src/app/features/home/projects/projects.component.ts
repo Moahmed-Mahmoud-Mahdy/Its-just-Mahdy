@@ -4,11 +4,18 @@ import { ProjectsService } from '../../../core/services/projects.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Project } from '../../../core/models/portfolio.model';
 import { PasswordModalComponent } from '../../admin/password-modal/password-modal.component';
+import { ProjectEditorComponent } from '../../admin/project-editor/project-editor.component';
+import { ScrollRevealDirective } from '../../../shared/directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, PasswordModalComponent],
+  imports: [
+    CommonModule, 
+    PasswordModalComponent, 
+    ProjectEditorComponent,
+    ScrollRevealDirective
+  ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
@@ -16,9 +23,10 @@ export class ProjectsComponent {
   private projectsService = inject(ProjectsService);
   private authService = inject(AuthService);
 
-  categories = ['All', 'Web Apps', 'UI/Design', 'Mini Apps'];
+  categories = ['All', 'Web Apps', 'Mobile Apps', 'Mini Apps'];
   activeCategory = signal<string>('All');
   showPasswordModal = signal<boolean>(false);
+  showAdminPanel = signal<boolean>(false);
 
   get filteredProjects(): Project[] {
     return this.projectsService.getProjectsByCategory(this.activeCategory());
@@ -34,8 +42,7 @@ export class ProjectsComponent {
 
   openEditProjects(): void {
     if (this.authService.isAuthenticated()) {
-      // Navigate to admin panel or show edit mode
-      console.log('Opening admin panel...');
+      this.showAdminPanel.set(true);
     } else {
       this.showPasswordModal.set(true);
     }
@@ -43,11 +50,15 @@ export class ProjectsComponent {
 
   onPasswordSuccess(): void {
     this.showPasswordModal.set(false);
-    console.log('Authenticated! Opening admin panel...');
+    this.showAdminPanel.set(true);
   }
 
   onPasswordCancel(): void {
     this.showPasswordModal.set(false);
+  }
+
+  closeAdminPanel(): void {
+    this.showAdminPanel.set(false);
   }
 
   openProject(project: Project): void {

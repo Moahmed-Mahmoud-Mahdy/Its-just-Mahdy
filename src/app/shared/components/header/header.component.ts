@@ -13,21 +13,31 @@ export class HeaderComponent {
   themeService = inject(ThemeService);
   
   isMenuOpen = false;
+  isClosing = false;
 
   navLinks = [
     { label: 'Home', href: '#home' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
-    { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' }
   ];
 
   toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) {
+      this.closeMenu();
+    } else {
+      this.isMenuOpen = true;
+    }
   }
 
   closeMenu(): void {
-    this.isMenuOpen = false;
+    if (!this.isMenuOpen || this.isClosing) return;
+    
+    this.isClosing = true;
+    setTimeout(() => {
+      this.isMenuOpen = false;
+      this.isClosing = false;
+    }, 400); // Match SCSS animation duration
   }
 
   scrollTo(event: Event, href: string): void {

@@ -1,6 +1,17 @@
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-content">
+      <!-- Footer Identity -->
+      <div class="footer-identity">
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="Logo" class="logo-img" />
+        </div>
+        <div class="footer-info">
+          <span class="footer-name">{{ personalInfo.name }}</span>
+          <span class="footer-title">{{ personalInfo.title }}</span>
+        </div>
+      </div>
+
       <!-- Social Links -->
       <div class="social-links">
         @for (link of socialLinks; track link.label) {
@@ -16,11 +27,11 @@
         }
       </div>
 
-      <!-- Navigation & Back to Top -->
-      <div class="footer-nav">
+      <!-- Back to Top -->
+      <div class="footer-actions">
         <button class="back-to-top" (click)="scrollToTop()">
-          Back to Top
           <span class="material-symbols-outlined">arrow_upward</span>
+          <span>Back to Top</span>
         </button>
       </div>
     </div>

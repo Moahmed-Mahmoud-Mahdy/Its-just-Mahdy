@@ -1,64 +1,103 @@
 <section id="about" class="about">
   <div class="about-container">
     <div class="about-grid">
-      <!-- Text Content -->
+      <!-- Left: Text Content -->
       <div class="about-content">
         <div class="about-header">
-          <span class="section-label">About Me</span>
+          <span class="section-badge">WHO AM I?</span>
           <h2 class="section-title">
-            Passionate Developer Building
-            <span class="text-primary">Digital Solutions</span>
+            Hi, I'm
+            <span class="text-primary">{{
+              personalInfo.name.split(" ")[0]
+            }}</span>
+            {{ personalInfo.name.split(" ").slice(1).join(" ") }}
           </h2>
         </div>
 
         <div class="about-text">
           <p>{{ personalInfo.aboutMe }}</p>
-          <p>
-            With over {{ personalInfo.yearsExp }} years of experience in web
-            development, I've had the privilege of working on diverse projects
-            that have sharpened my skills in both frontend and backend
-            technologies.
-          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="about-buttons">
+          <a href="#projects" class="btn btn-primary">
+            <span>View Projects</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+          <button class="btn btn-outline" (click)="downloadCv()">
+            <span class="material-symbols-outlined">download</span>
+            <span>Download CV</span>
+          </button>
         </div>
 
         <!-- Stats -->
         <div class="about-stats">
           <div class="stat-item">
-            <span class="stat-number">{{ personalInfo.yearsExp }}+</span>
-            <span class="stat-label">Years Experience</span>
+            <span class="stat-number">{{ personalInfo.projectsCount }}+</span>
+            <span class="stat-label">PROJECTS</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-number">{{ personalInfo.projectsCount }}+</span>
-            <span class="stat-label">Projects Completed</span>
+            <span class="stat-number">{{ personalInfo.yearsExp }}+</span>
+            <span class="stat-label">YEARS EXP</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-number">{{ personalInfo.clients }}+</span>
-            <span class="stat-label">Happy Clients</span>
+            <span class="stat-label">CLIENTS</span>
           </div>
         </div>
-
-        <!-- CTA -->
-        <button class="btn btn-primary" (click)="downloadCv()">
-          <span class="material-symbols-outlined">download</span>
-          <span>Download Resume</span>
-        </button>
       </div>
 
-      <!-- Highlights Cards -->
-      <div class="about-highlights">
+      <!-- Right: Profile Visual -->
+      <div class="about-visual">
+        <!-- Background glow -->
+        <div class="visual-glow"></div>
+
+        <!-- Profile Picture -->
+        <div class="profile-frame">
+          <img
+            src="assets/profile.jpg"
+            [alt]="personalInfo.name"
+            class="profile-image"
+          />
+        </div>
+
+        <!-- Floating Tech Icons -->
+        <div class="floating-icon floating-angular">
+          <span class="material-symbols-outlined">token</span>
+          <span class="floating-label">Angular</span>
+        </div>
+        <div class="floating-icon floating-js">
+          <span class="material-symbols-outlined">javascript</span>
+          <span class="floating-label floating-label-bottom">JS</span>
+        </div>
+        <div class="floating-icon floating-html">
+          <span class="material-symbols-outlined">html</span>
+          <span class="floating-label">Web</span>
+        </div>
+        <div class="floating-icon floating-git">
+          <span class="material-symbols-outlined">account_tree</span>
+          <span class="floating-label floating-label-bottom">Git</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modern Stack Section -->
+    <div class="stack-section">
+      <div class="stack-header">
+        <h3 class="stack-title">My Modern Stack</h3>
+        <span class="stack-subtitle">Tools I use daily</span>
+      </div>
+      <div class="stack-grid">
         @for (highlight of highlights; track highlight.title) {
-          <div class="highlight-card">
+          <div class="stack-card">
             <div class="highlight-icon">
               <span class="material-symbols-outlined">{{
                 highlight.icon
               }}</span>
             </div>
-            <div class="highlight-content">
-              <h3 class="highlight-title">{{ highlight.title }}</h3>
-              <p class="highlight-description">{{ highlight.description }}</p>
-            </div>
+            <h4 class="stack-name">{{ highlight.title }}</h4>
           </div>
         }
       </div>

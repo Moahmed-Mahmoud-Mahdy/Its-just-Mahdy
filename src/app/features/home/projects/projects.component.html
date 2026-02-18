@@ -28,15 +28,23 @@
 
       <!-- Edit Button -->
       <button class="edit-btn" (click)="openEditProjects()">
-        <span class="material-symbols-outlined">lock</span>
-        <span>Edit Projects</span>
+        <span class="material-symbols-outlined">
+          {{ isAuthenticated ? "lock_open" : "lock" }}
+        </span>
+        <span>{{ isAuthenticated ? "Manage" : "Edit Projects" }}</span>
       </button>
     </div>
 
+    <!-- Admin Panel -->
+    @if (showAdminPanel()) {
+      <app-project-editor (onClose)="closeAdminPanel()"></app-project-editor>
+    }
+
     <!-- Projects Grid -->
-    <div class="projects-grid">
+    <div class="projects-grid" appScrollReveal>
       @for (project of filteredProjects; track project.id) {
         <div class="project-card">
+          <div class="card-glass-panel"></div>
           <!-- Image -->
           <div class="card-image">
             <img
@@ -59,10 +67,12 @@
             <div class="card-actions">
               @if (project.liveUrl) {
                 <button class="btn btn-primary" (click)="openProject(project)">
+                  <span class="material-symbols-outlined">rocket_launch</span>
                   <span>Live Demo</span>
                 </button>
               }
               <button class="btn btn-secondary" (click)="openGithub(project)">
+                <span class="material-symbols-outlined">code</span>
                 <span>GitHub</span>
               </button>
             </div>

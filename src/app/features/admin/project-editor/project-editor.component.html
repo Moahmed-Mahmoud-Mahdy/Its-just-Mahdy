@@ -1,0 +1,253 @@
+<div class="editor-panel">
+  <!-- Admin Header -->
+  <div class="editor-header">
+    <div class="editor-title-section">
+      <span class="material-symbols-outlined editor-icon">dashboard</span>
+      <div>
+        <h2 class="editor-title">Project Manager</h2>
+        <p class="editor-subtitle">
+          Add, edit, or remove projects from your portfolio.
+        </p>
+      </div>
+    </div>
+    <div class="editor-actions">
+      <button class="btn btn-primary btn-sm" (click)="openAddForm()">
+        <span class="material-symbols-outlined">add</span>
+        <span>Add Project</span>
+      </button>
+      <button class="btn btn-secondary btn-sm" (click)="closePanel()">
+        <span class="material-symbols-outlined">close</span>
+        <span>Close</span>
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Project List -->
+  <div class="project-list">
+    @for (project of projects; track project.id) {
+      <div class="project-row" [class.hidden-project]="!project.isPublic">
+        <!-- Project Info -->
+        <div class="project-info">
+          <div class="project-thumb">
+            <img [src]="project.imageUrl" [alt]="project.title" />
+          </div>
+          <div class="project-details">
+            <h3 class="project-name">{{ project.title }}</h3>
+            <p class="project-meta">
+              <span class="project-category">{{ project.category }}</span>
+              <span class="meta-dot">•</span>
+              <span>{{ project.techStack.join(", ") }}</span>
+            </p>
+            @if (!project.isPublic) {
+              <span class="hidden-badge">
+                <span class="material-symbols-outlined">visibility_off</span>
+                Hidden
+              </span>
+            }
+          </div>
+        </div>
+
+        <!-- Row Actions -->
+        <div class="row-actions">
+          <button
+            class="action-btn"
+            title="Toggle visibility"
+            (click)="toggleVisibility(project.id)"
+          >
+            <span class="material-symbols-outlined">
+              {{ project.isPublic ? "visibility" : "visibility_off" }}
+            </span>
+          </button>
+          <button
+            class="action-btn"
+            title="Edit project"
+            (click)="openEditForm(project)"
+          >
+            <span class="material-symbols-outlined">edit</span>
+          </button>
+
+          @if (deleteConfirmId() === project.id) {
+            <div class="delete-confirm">
+              <span class="delete-text">Delete?</span>
+              <button
+                class="action-btn action-btn-danger"
+                (click)="deleteProject(project.id)"
+              >
+                <span class="material-symbols-outlined">check</span>
+              </button>
+              <button class="action-btn" (click)="cancelDelete()">
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+          } @else {
+            <button
+              class="action-btn action-btn-danger"
+              title="Delete project"
+              (click)="confirmDelete(project.id)"
+            >
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (projects.length === 0) {
+      <div class="empty-state">
+        <span class="material-symbols-outlined empty-icon">folder_off</span>
+        <p>No projects yet. Click "Add Project" to get started.</p>
+      </div>
+    }
+  </div>
+
+  <!-- Add/Edit Form Panel -->
+  @if (showForm()) {
+    <div class="form-overlay" (click)="closeForm()">
+      <div class="form-panel" (click)="$event.stopPropagation()">
+        <div class="form-header">
+          <h3 class="form-title">
+            {{ editingProject() ? "Edit Project" : "Add New Project" }}
+          </h3>
+          <button class="action-btn" (click)="closeForm()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <form class="project-form" (ngSubmit)="saveProject()">
+          <div class="form-grid">
+            <!-- Title -->
+            <div class="form-group full-width">
+              <label class="form-label">Title *</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Project name"
+                [(ngModel)]="formData.title"
+                name="title"
+                required
+              />
+            </div>
+
+            <!-- Description -->
+            <div class="form-group full-width">
+              <label class="form-label">Description *</label>
+              <textarea
+                class="form-input form-textarea"
+                placeholder="Brief description of the project..."
+                [(ngModel)]="formData.description"
+                name="description"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="form-group">
+              <label class="form-label">Tech Stack</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Angular, TypeScript, Firebase"
+                [(ngModel)]="formData.techStack"
+                name="techStack"
+              />
+              <span class="form-hint">Comma-separated values</span>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select
+                class="form-input form-select"
+                [(ngModel)]="formData.category"
+                name="category"
+              >
+                @for (cat of categories; track cat) {
+                  <option [value]="cat">{{ cat }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Image URL -->
+            <div class="form-group full-width">
+              <label class="form-label">Image URL</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="https://..."
+                [(ngModel)]="formData.imageUrl"
+                name="imageUrl"
+              />
+            </div>
+
+            <!-- GitHub URL -->
+            <div class="form-group">
+              <label class="form-label">GitHub URL</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="https://github.com/..."
+                [(ngModel)]="formData.githubUrl"
+                name="githubUrl"
+              />
+            </div>
+
+            <!-- Live URL -->
+            <div class="form-group">
+              <label class="form-label">Live URL</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="https://..."
+                [(ngModel)]="formData.liveUrl"
+                name="liveUrl"
+              />
+            </div>
+
+            <!-- Public Toggle -->
+            <div class="form-group full-width">
+              <label class="form-checkbox-label">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="formData.isPublic"
+                  name="isPublic"
+                  class="form-checkbox"
+                />
+                <span>Publicly visible on portfolio</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeForm()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="
+                !formData.title.trim() || !formData.description.trim()
+              "
+            >
+              <span class="material-symbols-outlined">
+                {{ editingProject() ? "save" : "add" }}
+              </span>
+              <span>{{
+                editingProject() ? "Save Changes" : "Add Project"
+              }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

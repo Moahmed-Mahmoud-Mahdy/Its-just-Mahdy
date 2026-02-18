@@ -47,7 +47,7 @@ export class ContactComponent {
     {
       icon: 'location_on',
       label: 'Location',
-      value: 'Cairo, Egypt',
+      value: 'Egypt, Giza',
       href: null
     }
   ];
@@ -95,6 +95,10 @@ export class ContactComponent {
   private isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  downloadCv(): void {
+    this.cvService.generatePDF();
   }
 
   private resetForm(): void {

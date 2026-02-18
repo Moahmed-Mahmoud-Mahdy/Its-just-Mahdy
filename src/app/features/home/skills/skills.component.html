@@ -1,48 +1,86 @@
 <section id="skills" class="skills">
   <div class="skills-container">
-    <!-- Header -->
+    <!-- Section Header -->
     <div class="skills-header">
-      <h2 class="section-title">Technical Skills</h2>
+      <span class="section-badge">MY EXPERTISE</span>
+      <h2 class="section-title">Skills & Tools</h2>
       <p class="section-description">
-        Core technologies and tools I use to bring ideas to life. Constantly
-        learning and expanding my expertise.
+        Technologies I work with to build modern, scalable applications.
       </p>
     </div>
 
+    <!-- Category Filter -->
+    <div class="skills-filter">
+      @for (category of categories; track category) {
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === category"
+          (click)="setCategory(category)"
+        >
+          {{ category }}
+        </button>
+      }
+    </div>
+
     <!-- Skills Grid -->
-    <div class="skills-grid">
-      @for (skill of skills; track skill.name) {
-        <div class="skill-card">
-          <!-- Icon -->
-          <div
-            class="skill-icon"
-            [style.background-color]="skill.color + '15'"
-            [style.color]="skill.color"
-          >
-            <span class="material-symbols-outlined">{{ skill.icon }}</span>
-          </div>
+    <div class="skills-grid" appScrollReveal>
+      @for (skill of filteredSkills; track skill.name; let i = $index) {
+        <div
+          class="skill-card-v2"
+          [style.--delay]="i * 0.1 + 's'"
+          [style.--skill-color]="skill.color"
+        >
+          <div class="card-glass-panel"></div>
 
-          <!-- Content -->
-          <div class="skill-content">
-            <div class="skill-header">
-              <h3 class="skill-name">{{ skill.name }}</h3>
-              <span class="skill-percentage">{{ skill.percentage }}%</span>
-            </div>
-
-            <!-- Progress Bar -->
-            <div class="progress-bar">
+          <div class="card-content">
+            <!-- Header: Icon & Percentage -->
+            <div class="card-header">
               <div
-                class="progress-fill"
-                [style.width.%]="skill.percentage"
-                [style.background-color]="skill.color"
-              ></div>
+                class="skill-icon-box"
+                [style.background-color]="getSkillBgColor(skill.color)"
+              >
+                @if (skill.iconType === "material") {
+                  <span
+                    class="material-symbols-outlined"
+                    [style.color]="skill.color"
+                  >
+                    {{ skill.icon }}
+                  </span>
+                } @else if (skill.iconType === "fontawesome") {
+                  <i
+                    [class]="skill.icon"
+                    [style.color]="skill.color"
+                    class="skill-fa-icon"
+                  ></i>
+                } @else {
+                  <img
+                    [src]="skill.icon"
+                    [alt]="skill.name"
+                    class="skill-image-icon"
+                  />
+                }
+              </div>
+              <div class="skill-meta">
+                <span class="skill-name">{{ skill.name }}</span>
+              </div>
             </div>
 
             <!-- Description -->
-            <p class="skill-description">{{ skill.description }}</p>
+            <p class="skill-desc">{{ skill.description }}</p>
           </div>
         </div>
       }
+    </div>
+
+    <!-- Bottom Banner -->
+    <div class="learning-banner">
+      <span class="material-symbols-outlined banner-icon">auto_awesome</span>
+      <div class="banner-content">
+        <span class="banner-title">Always Evolving</span>
+        <span class="banner-text"
+          >Exploring AI, Cloud Architectures, and Next-Gen Frameworks</span
+        >
+      </div>
     </div>
   </div>
 </section>

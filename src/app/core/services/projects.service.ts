@@ -15,10 +15,11 @@ export class ProjectsService {
       techStack: ['HTML', 'CSS', 'JavaScript'],
       category: 'Mini Apps',
       imageUrl: 'assets/images/project-todo.png',
-      githubUrl: 'https://github.com/MrbotManl/My_To_DO',
+      githubUrl: 'https://github.com/Moahmed-Mahmoud-Mahdy/My_To_DO',
       liveUrl: 'https://my-to-do-sandy.vercel.app/',
       isPublic: true,
-      lastUpdated: new Date('2024-01-15')
+      lastUpdated: new Date('2024-01-15'),
+      icon: 'task_alt'
     },
     {
       id: '2',
@@ -27,10 +28,11 @@ export class ProjectsService {
       techStack: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
       category: 'Web Apps',
       imageUrl: 'assets/images/project-furni.png',
-      githubUrl: 'https://github.com/MrbotManl/Furni-',
+      githubUrl: 'https://github.com/Moahmed-Mahmoud-Mahdy/Furni-',
       liveUrl: 'https://furni-liart.vercel.app/',
       isPublic: true,
-      lastUpdated: new Date('2024-02-10')
+      lastUpdated: new Date('2024-02-10'),
+      icon: 'chair'
     },
     {
       id: '3',
@@ -39,22 +41,24 @@ export class ProjectsService {
       techStack: ['Python', 'Algorithm'],
       category: 'Mini Apps',
       imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-      githubUrl: 'https://github.com/MrbotManl/Convert-From-NFA-to-DFA',
+      githubUrl: 'https://github.com/Moahmed-Mahmoud-Mahdy/Convert-From-NFA-to-DFA',
       liveUrl: '',
       isPublic: true,
-      lastUpdated: new Date('2024-01-20')
+      lastUpdated: new Date('2024-01-20'),
+      icon: 'terminal'
     },
     {
       id: '4',
       title: 'L7ale7 Tracker App',
       description: 'A tracking application for monitoring and managing daily activities. Collaborative project with team features.',
-      techStack: ['Angular', 'TypeScript', 'Firebase'],
-      category: 'Web Apps',
+      techStack: ['Dart', 'Fluter', 'Firebase'],
+      category: 'Mobile Apps',
       imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
       githubUrl: 'https://github.com/MAMAFH/L7ale7_Tracker_App',
       liveUrl: '',
       isPublic: true,
-      lastUpdated: new Date('2024-02-01')
+      lastUpdated: new Date('2024-02-01'),
+      icon: 'monitoring'
     }
   ];
 

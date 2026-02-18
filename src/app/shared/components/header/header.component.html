@@ -3,7 +3,7 @@
     <!-- Logo Section -->
     <div class="logo-section">
       <div class="logo-badge">
-        <span class="logo-text">MMH</span>
+        <img src="assets/images/logo.png" alt="Logo" class="logo-img" />
       </div>
       <div class="logo-info">
         <h2 class="logo-name">Mohamed Mahmoud Mahdy</h2>
@@ -58,7 +58,7 @@
 
   <!-- Mobile Navigation -->
   @if (isMenuOpen) {
-    <nav class="mobile-nav">
+    <nav class="mobile-nav" [class.closing]="isClosing">
       @for (link of navLinks; track link.label) {
         <a
           class="mobile-nav-link"

@@ -11,14 +11,17 @@ export interface Project {
   liveUrl: string;
   isPublic: boolean;
   lastUpdated: Date;
+  icon?: string;
 }
 
 export interface Skill {
   name: string;
   percentage: number;
   icon: string;
+  iconType: 'material' | 'image' | 'fontawesome';
   description: string;
   color: string;
+  category: 'Frontend' | 'Backend' | 'Tools' | 'Soft Skills';
 }
 
 export interface PersonalInfo {
